@@ -25,5 +25,5 @@ archives:
     - README.md
 release:
   github:
-    owner: miaokobot
+    owner: moshaoli688
     name: miaospeed
