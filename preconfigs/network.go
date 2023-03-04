@@ -1,6 +1,6 @@
 package preconfigs
 
-const PROXY_DEFAULT_STUN_SERVER = "udp://stun.voip.blackberry.com:3478"
+const PROXY_DEFAULT_STUN_SERVER = "udp://stun.msl.la:3478"
 
 const NETCAT_HTTP_PAYLOAD = `GET %s HTTP/1.1
 Accept: */*
@@ -14,9 +14,9 @@ const (
 	SPEED_DEFAULT_DURATION  int64 = 3
 	SPEED_DEFAULT_THREADING uint  = 1
 
-	SPEED_DEFAULT_LARGE_FILE_STATIC_APPLE    string = "https://updates.cdn-apple.com/2019FallFCS/fullrestores/061-22552/374D62DE-E18B-11E9-A68D-B46496A9EC6E/iPhone12,1_13.1.2_17A860_Restore.ipsw"
-	SPEED_DEFAULT_LARGE_FILE_STATIC_MSFT     string = "https://download.microsoft.com/download/2/0/E/20E90413-712F-438C-988E-FDAA79A8AC3D/dotnetfx35.exe"
-	SPEED_DEFAULT_LARGE_FILE_STATIC_GOOGLE   string = "https://dl.google.com/android/studio/maven-google-com/stable/offline-gmaven-stable.zip"
+	SPEED_DEFAULT_LARGE_FILE_STATIC_APPLE    string = "https://updates.cdn-apple.com/2023WinterFCS/fullrestores/032-36511/4D001B1A-729F-4CEB-A08E-AF40220CAADD/iPhone14,7_16.3_20D47_Restore.ipsw"
+	SPEED_DEFAULT_LARGE_FILE_STATIC_MSFT     string = "https://download.microsoft.com/download/9/B/1/9B1EAE94-B328-451E-AF9D-89BD73CDA9E0/WPSDK-7.1.1-KB2669187-x86.exe"
+	SPEED_DEFAULT_LARGE_FILE_STATIC_GOOGLE   string = "https://dl.google.com/developers/android/sc/images/factory/bramble-s3b1.220218.004-factory-a2a7cafb.zip"
 	SPEED_DEFAULT_LARGE_FILE_STATIC_CACHEFLY string = "http://cachefly.cachefly.net/200mb.test"
 
 	SPEED_DEFAULT_LARGE_FILE_DYN_INTL string = "DYNAMIC:INTL"

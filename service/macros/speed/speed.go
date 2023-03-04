@@ -143,9 +143,17 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 
 		if strings.Contains(string(body), "Microsoft") {
 			return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_MSFT}
-		} else {
+		} else if strings.Contains(string(body), "Google") {
 			return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_GOOGLE}
+		} else {
+			return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_APPLE}
 		}
+		/*
+			if strings.Contains(string(body), "Microsoft") {
+				return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_MSFT}
+			} else {
+				return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_GOOGLE}
+			}*/
 	case preconfigs.SPEED_DEFAULT_LARGE_FILE_DYN_FAST:
 		body, _, _ := vendors.RequestWithRetry(proxy, 3, 1000, &interfaces.RequestOptions{
 			URL:     "https://api.fast.com/netflix/speedtest/v2?https=false&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5",
