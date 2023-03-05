@@ -170,8 +170,7 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 	return []string{file}
 }
 func getRandomUrl() string {
-	num := len(preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC)
-	Random, _ := rand.Int(rand.Reader, big.NewInt(int64(num)))
+	Random, _ := rand.Int(rand.Reader, big.NewInt(int64(len(preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC))))
 	RandomNum, _ := strconv.Atoi(Random.String())
 	return preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC[RandomNum]
 }
