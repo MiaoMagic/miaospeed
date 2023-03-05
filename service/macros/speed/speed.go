@@ -2,8 +2,11 @@ package speed
 
 import (
 	"context"
+	"crypto/rand"
 	"io"
 	"io/ioutil"
+	"math/big"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -148,12 +151,10 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 		} else {
 			return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_APPLE}
 		}
-		/*
-			if strings.Contains(string(body), "Microsoft") {
-				return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_MSFT}
-			} else {
-				return []string{preconfigs.SPEED_DEFAULT_LARGE_FILE_STATIC_GOOGLE}
-			}*/
+
+	case preconfigs.SPEED_DEFAULT_LARGE_FILE_DYN_ALL_INTL:
+		return []string{getRandomUrl()}
+
 	case preconfigs.SPEED_DEFAULT_LARGE_FILE_DYN_FAST:
 		body, _, _ := vendors.RequestWithRetry(proxy, 3, 1000, &interfaces.RequestOptions{
 			URL:     "https://api.fast.com/netflix/speedtest/v2?https=false&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5",
@@ -167,4 +168,10 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 		}
 	}
 	return []string{file}
+}
+func getRandomUrl() string {
+	num := len(preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC)
+	Random, _ := rand.Int(rand.Reader, big.NewInt(int64(num)))
+	RandomNum, _ := strconv.Atoi(Random.String())
+	return preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC[RandomNum]
 }
