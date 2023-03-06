@@ -49,6 +49,9 @@ func (src *SlaveRequestConfigs) Clone() *SlaveRequestConfigs {
 
 func (src *SlaveRequestConfigs) Merge(from *SlaveRequestConfigs) *SlaveRequestConfigs {
 	ret := src.Clone()
+	if from.STUNURL != "" {
+		ret.STUNURL = from.STUNURL
+	}
 	if from.DownloadURL != "" {
 		ret.DownloadURL = from.DownloadURL
 	}
