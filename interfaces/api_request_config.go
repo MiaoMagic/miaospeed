@@ -32,6 +32,7 @@ func (src *SlaveRequestConfigs) DescriptionText() string {
 
 func (src *SlaveRequestConfigs) Clone() *SlaveRequestConfigs {
 	return &SlaveRequestConfigs{
+		STUNURL:           src.STUNURL,
 		DownloadURL:       src.DownloadURL,
 		DownloadDuration:  src.DownloadDuration,
 		DownloadThreading: src.DownloadThreading,
