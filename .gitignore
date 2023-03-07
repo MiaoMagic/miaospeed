@@ -8,8 +8,8 @@ dist
 *.tgz
 *.dev.sh
 build.*.sh
+build.*.bat
 *.mmdb
-build.bat
 
 # configs
 test.yaml
@@ -33,3 +33,4 @@ fonts
 
 # dev
 .idea
+
