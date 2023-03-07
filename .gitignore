@@ -9,7 +9,7 @@ dist
 *.dev.sh
 build.*.sh
 *.mmdb
-build.bat
+build.*.bat
 
 # configs
 test.yaml
