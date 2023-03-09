@@ -2,6 +2,8 @@ package udp
 
 import (
 	"context"
+	"github.com/miaokobot/miaospeed/preconfigs"
+	"github.com/miaokobot/miaospeed/utils"
 	"strings"
 	"sync"
 
@@ -9,6 +11,11 @@ import (
 )
 
 func detectNATType(proxy interfaces.Vendor, url string) (nmt NATMapType, nft NATFilterType) {
+
+	DomainPreheating := utils.DomainPreheating(url)
+	if DomainPreheating == nil {
+		url = preconfigs.PROXY_DEFAULT_STUN_SERVER
+	}
 	addrStr := strings.TrimLeft(url, "udp://")
 
 	wg := sync.WaitGroup{}
