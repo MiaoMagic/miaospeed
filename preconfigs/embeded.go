@@ -12,3 +12,6 @@ var MIAOKO_TLS_KEY string
 
 //go:embed embeded/ca-certificates.crt
 var MIAOKO_ROOT_CA []byte
+
+//go:embed embeded/speedtesturl
+var SPEED_DEFAULT_LARGE_FILE_DYNAMIC string
