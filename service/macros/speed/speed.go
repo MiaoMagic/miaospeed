@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/rand"
 	"io"
-	"io/ioutil"
 	"math/big"
 	"strconv"
 	"strings"
@@ -115,7 +114,7 @@ func SingleThread(downloadFiles []string, proxy interfaces.Vendor, timeoutSecond
 				} else {
 					bodyReader = resp.Body
 				}
-				io.Copy(ioutil.Discard, io.TeeReader(bodyReader, wc))
+				io.Copy(io.Discard, io.TeeReader(bodyReader, wc))
 			}
 			// close body
 			if resp != nil && resp.Body != nil {
