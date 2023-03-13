@@ -45,7 +45,7 @@ func RunCliDefault() {
 	sflag.Parse(os.Args[1:])
 
 	if *versionOnly {
-		fmt.Println(utils.VERSION)
+		fmt.Println(utils.VERSION + "(" + utils.BUILDCOUNT + ")")
 		os.Exit(0)
 	}
 

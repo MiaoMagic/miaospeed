@@ -53,6 +53,7 @@ func (src *SlaveRequestConfigs) Merge(from *SlaveRequestConfigs) *SlaveRequestCo
 	if from.STUNURL != "" {
 		ret.STUNURL = from.STUNURL
 	}
+
 	if from.DownloadURL != "" {
 		ret.DownloadURL = from.DownloadURL
 	}
@@ -89,9 +90,11 @@ func (src *SlaveRequestConfigs) Merge(from *SlaveRequestConfigs) *SlaveRequestCo
 }
 
 func (cfg *SlaveRequestConfigs) Check() *SlaveRequestConfigs {
+
 	if cfg == nil {
 		cfg = &SlaveRequestConfigs{}
 	}
+
 	if cfg.STUNURL == "" {
 		cfg.STUNURL = preconfigs.PROXY_DEFAULT_STUN_SERVER
 	}

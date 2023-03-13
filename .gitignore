@@ -9,7 +9,7 @@ dist
 *.dev.sh
 build.*.sh
 *.mmdb
-build.bat
+build.*.bat
 
 # configs
 test.yaml
@@ -30,6 +30,7 @@ fonts
 .DS_Store
 ._.DS_Store
 
-
 # dev
 .idea
+.vscode
+

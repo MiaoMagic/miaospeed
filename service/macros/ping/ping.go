@@ -139,6 +139,10 @@ func ping(p interfaces.Vendor, url string, withAvg uint16, maxAttempt int, timeo
 	if withAvg < 1 || withAvg > uint16(maxAttempt) {
 		withAvg = 1
 	}
+	DomainPreheating := utils.DomainPreheating(url)
+	if DomainPreheating == nil {
+		url = preconfigs.SLAVE_DEFAULT_PING
+	}
 
 	for failNum+len(totalMS) < maxAttempt && len(totalMS) < int(withAvg) && maxAttempt-failNum >= int(withAvg) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Millisecond)

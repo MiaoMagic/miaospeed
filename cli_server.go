@@ -35,7 +35,7 @@ func InitConfigServer() *utils.GlobalConfig {
 
 func RunCliServer() {
 	InitConfigServer()
-	utils.DWarnf("MiaoSpeed speedtesting client %s", utils.VERSION)
+	utils.DWarnf("MiaoSpeed SpeedTesting Client %s", utils.VERSION+"("+utils.BUILDCOUNT+")")
 
 	// load maxmind db
 	if utils.LoadMaxMindDB(utils.GCFG.MaxmindDB) != nil {

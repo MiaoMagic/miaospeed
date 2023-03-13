@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/rand"
 	"io"
-	"io/ioutil"
 	"math/big"
 	"strconv"
 	"strings"
@@ -115,7 +114,7 @@ func SingleThread(downloadFiles []string, proxy interfaces.Vendor, timeoutSecond
 				} else {
 					bodyReader = resp.Body
 				}
-				io.Copy(ioutil.Discard, io.TeeReader(bodyReader, wc))
+				io.Copy(io.Discard, io.TeeReader(bodyReader, wc))
 			}
 			// close body
 			if resp != nil && resp.Body != nil {
@@ -153,7 +152,8 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 		}
 
 	case preconfigs.SPEED_DEFAULT_LARGE_FILE_DYN_ALL_INTL:
-		return []string{getRandomUrl()}
+		FileUrl := getRandomUrl(preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC)
+		return []string{FileUrl}
 
 	case preconfigs.SPEED_DEFAULT_LARGE_FILE_DYN_FAST:
 		body, _, _ := vendors.RequestWithRetry(proxy, 3, 1000, &interfaces.RequestOptions{
@@ -169,8 +169,9 @@ func RefetchDownloadFiles(proxy interfaces.Vendor, file string) []string {
 	}
 	return []string{file}
 }
-func getRandomUrl() string {
-	Random, _ := rand.Int(rand.Reader, big.NewInt(int64(len(preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC))))
+func getRandomUrl(url string) string {
+	SpeedUrl := strings.Split(strings.ReplaceAll(url, "\r\n", "\n"), "\n")
+	Random, _ := rand.Int(rand.Reader, big.NewInt(int64(len(SpeedUrl))))
 	RandomNum, _ := strconv.Atoi(Random.String())
-	return preconfigs.SPEED_DEFAULT_LARGE_FILE_DYNAMIC[RandomNum]
+	return SpeedUrl[RandomNum]
 }
