@@ -34,6 +34,8 @@
 3. 签名，参考: https://github.com/moshaoli688/miaospeed/blob/df6202409e87c5d944ab756608fd31d35390b5c0/utils/challenge.go#L39 其中需要传入两个参数。第一个参数是 `启动TOKEN` （即您启动 miaospeed 时传入的 -token 后的内容），第二个就是在第二步中您构建的结构体 `req`。签名的方法，通俗一些说明就是将结构体转换为 JSON String 然后与 `启动TOKEN` 和 `编译TOKEN` 切片分别累积做 SHA512 HASH。最后，将签名的字符串写入 `req.Challenge` 即可。
 4. 发送完成签名后的请求，您就可以接收返回值了。服务器返回的结构体统一为 https://github.com/moshaoli688/miaospeed/blob/fd7abecc2d36a0f18b08f048f9a53b7c0a26bd9e/interfaces/api_response.go#L28
 
+如果偷懒不想自己写可以看 [miaospeed对接签名算法(PHP、Python、Rust等)](https://www.msl.la/archives/564/)
+
 ## 版权与协议
 
 miaospeed 采用 AGPLv3 协议开源，您可以按照 AGPLv3 协议对 miaospeed 进行修改、贡献、分发、乃至商用。但请切记，您必须遵守 AGPLv3 协议下的一切义务，以免发生不必要的法律纠纷。
