@@ -27,7 +27,7 @@ func urlToMetadata(rawURL string, network constant.NetWork) (addr constant.Metad
 	addr = constant.Metadata{
 		NetWork: network,
 		Host:    u.Hostname(),
-		DstIP:   nil,
+		//DstIP:   nil, //There is no other way to temporarily log out
 		DstPort: port,
 	}
 	return
