@@ -11,7 +11,7 @@ func Download(url string) (*http.Response, error) {
 		return nil, err
 	}
 
-	req.Header.Set("User-Agent", "curl/7.73.0 miaospeed/"+VERSION)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
