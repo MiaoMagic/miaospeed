@@ -1,3 +1,5 @@
+//go:build meta
+
 package utils
 
 import _ "embed"
@@ -12,5 +14,5 @@ var BUILDTOKEN string
 
 const (
 	IDENTIFIER = "Speed"
-	VERSION    = "4.3.4"
+	VERSION    = "4.3.5-Meta"
 )

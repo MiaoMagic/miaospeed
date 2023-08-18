@@ -2,8 +2,11 @@ builds:
   - id: miaospeed
     dir: .
     binary: miaospeed
+    env:
+      - BRAND=miaospeed
+      - CGO_ENABLED=0
     ldflags:
-      - -s -w -X "main.COMMIT={{.Commit}}" -X "main.BUILDCOUNT={{.Env.BUILDCOUNT}}" -X "main.BRAND={{.Env.BRAND}}" -X "main.COMPILATIONTIME={{.Env.COMPILATIONTIME}}"
+      - -s -w -X "main.COMMIT={{.Commit}}" -X "main.BUILDCOUNT={{.Env.BUILDCOUNT}}" -X "main.BRAND={{.Env.BRAND}}" -X "main.COMPILATIONTIME={{.Env.COMPILATIONTIME}}" -tags core
     goos:
       - darwin
       - linux
@@ -11,8 +14,11 @@ builds:
   - id: miaospeed.meta
     dir: .
     binary: miaospeed.meta
+    env:
+      - BRAND=miaospeed.meta
+      - CGO_ENABLED=0
     ldflags:
-      - -s -w -X "main.COMMIT={{.Commit}}" -X "main.BUILDCOUNT={{.Env.BUILDCOUNT}}" -X "main.BRAND={{.Env.BRAND}}" -X "main.COMPILATIONTIME={{.Env.COMPILATIONTIME}}"
+      - -s -w -X "main.COMMIT={{.Commit}}" -X "main.BUILDCOUNT={{.Env.BUILDCOUNT}}" -X "main.BRAND={{.Env.BRAND}}" -X "main.COMPILATIONTIME={{.Env.COMPILATIONTIME}}" -tags meta
     goos:
       - darwin
       - linux
