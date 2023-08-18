@@ -2,12 +2,13 @@ package udp
 
 import (
 	"context"
-	"github.com/miaokobot/miaospeed/preconfigs"
-	"github.com/miaokobot/miaospeed/utils"
 	"strings"
 	"sync"
 
-	"github.com/miaokobot/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/preconfigs"
+	"github.com/moshaoli688/miaospeed/utils"
+
+	"github.com/moshaoli688/miaospeed/interfaces"
 )
 
 func detectNATType(proxy interfaces.Vendor, url string) (nmt NATMapType, nft NATFilterType) {

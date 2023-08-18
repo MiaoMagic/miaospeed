@@ -1,6 +1,6 @@
 package interfaces
 
-import "github.com/miaokobot/miaospeed/utils/structs"
+import "github.com/moshaoli688/miaospeed/utils/structs"
 
 type ProxyType string
 

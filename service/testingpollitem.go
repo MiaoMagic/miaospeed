@@ -4,14 +4,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/miaokobot/miaospeed/interfaces"
-	"github.com/miaokobot/miaospeed/service/macros"
-	"github.com/miaokobot/miaospeed/service/macros/invalid"
-	"github.com/miaokobot/miaospeed/service/matrices"
-	"github.com/miaokobot/miaospeed/service/taskpoll"
-	"github.com/miaokobot/miaospeed/utils"
-	"github.com/miaokobot/miaospeed/utils/structs"
-	"github.com/miaokobot/miaospeed/vendors"
+	"github.com/moshaoli688/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/service/macros"
+	"github.com/moshaoli688/miaospeed/service/macros/invalid"
+	"github.com/moshaoli688/miaospeed/service/matrices"
+	"github.com/moshaoli688/miaospeed/service/taskpoll"
+	"github.com/moshaoli688/miaospeed/utils"
+	"github.com/moshaoli688/miaospeed/utils/structs"
+	"github.com/moshaoli688/miaospeed/vendors"
 )
 
 type TestingPollItem struct {

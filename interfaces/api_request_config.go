@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"github.com/miaokobot/miaospeed/preconfigs"
-	"github.com/miaokobot/miaospeed/utils/structs"
+	"github.com/moshaoli688/miaospeed/preconfigs"
+	"github.com/moshaoli688/miaospeed/utils/structs"
 )
 
 type SlaveRequestConfigs struct {

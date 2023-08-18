@@ -1,6 +1,6 @@
 package speed
 
-import "github.com/miaokobot/miaospeed/interfaces"
+import "github.com/moshaoli688/miaospeed/interfaces"
 
 type Speed struct {
 	AvgSpeed  uint64

@@ -1,4 +1,4 @@
-module github.com/miaokobot/miaospeed
+module github.com/moshaoli688/miaospeed
 
 go 1.21
 

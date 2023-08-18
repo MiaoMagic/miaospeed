@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/Dreamacro/clash/constant"
-	"github.com/miaokobot/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/interfaces"
 )
 
 type Clash struct {

@@ -7,7 +7,7 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/miaokobot/miaospeed/utils"
+	"github.com/moshaoli688/miaospeed/utils"
 )
 
 const MAXMIND_DB_DOWNLOAD_URL = "https://download.maxmind.com/app/geoip_download?edition_id=%s&license_key=%s&suffix=tar.gz"

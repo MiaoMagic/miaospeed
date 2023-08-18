@@ -7,13 +7,13 @@ import (
 	"strings"
 
 	"github.com/gorilla/websocket"
-	"github.com/miaokobot/miaospeed/interfaces"
-	"github.com/miaokobot/miaospeed/preconfigs"
-	"github.com/miaokobot/miaospeed/utils"
-	"github.com/miaokobot/miaospeed/utils/structs"
+	"github.com/moshaoli688/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/preconfigs"
+	"github.com/moshaoli688/miaospeed/utils"
+	"github.com/moshaoli688/miaospeed/utils/structs"
 
-	"github.com/miaokobot/miaospeed/service/matrices"
-	"github.com/miaokobot/miaospeed/service/taskpoll"
+	"github.com/moshaoli688/miaospeed/service/matrices"
+	"github.com/moshaoli688/miaospeed/service/taskpoll"
 )
 
 type WsHandler struct {

@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/miaokobot/miaospeed/interfaces"
-	"github.com/miaokobot/miaospeed/service/macros/script"
-	"github.com/miaokobot/miaospeed/utils"
-	"github.com/miaokobot/miaospeed/vendors"
+	"github.com/moshaoli688/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/service/macros/script"
+	"github.com/moshaoli688/miaospeed/utils"
+	"github.com/moshaoli688/miaospeed/vendors"
 )
 
 type ScriptTestCliParams struct {

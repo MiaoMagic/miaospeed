@@ -1,8 +1,8 @@
 package geo
 
 import (
-	"github.com/miaokobot/miaospeed/interfaces"
-	"github.com/miaokobot/miaospeed/utils"
+	"github.com/moshaoli688/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/utils"
 )
 
 func RunMMDBCheck(rawIp string) *interfaces.GeoInfo {

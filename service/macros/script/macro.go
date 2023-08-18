@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/miaokobot/miaospeed/interfaces"
-	"github.com/miaokobot/miaospeed/utils/structs"
+	"github.com/moshaoli688/miaospeed/interfaces"
+	"github.com/moshaoli688/miaospeed/utils/structs"
 	"golang.org/x/sync/semaphore"
 )
 
