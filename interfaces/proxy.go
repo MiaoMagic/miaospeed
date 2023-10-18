@@ -13,16 +13,17 @@ const (
 	Vmess        ProxyType = "Vmess"
 	Trojan       ProxyType = "Trojan"
 
-	Vless    ProxyType = "Vless"
-	Hysteria ProxyType = "Hysteria"
-	Tuic     ProxyType = "Tuic"
+	Vless     ProxyType = "Vless"
+	Hysteria  ProxyType = "Hysteria"
+	Hysteria2 ProxyType = "Hysteria2"
+	Tuic      ProxyType = "Tuic"
 
 	ProxyInvalid ProxyType = "Invalid"
 )
 
 var AllProxyTypes = []ProxyType{
 	Shadowsocks, ShadowsocksR, Snell, Socks5, Http, Vmess, Trojan,
-	Vless, Hysteria, Tuic,
+	Vless, Hysteria, Hysteria2, Tuic,
 }
 
 func Valid(proxyType ProxyType) bool {
