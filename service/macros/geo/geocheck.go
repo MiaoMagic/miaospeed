@@ -18,15 +18,17 @@ func RunGeoCheck(p interfaces.Vendor, script string, ip string, retry int, netwo
 		return r
 	}
 
-	// use mmdb first, if cannot get record, try remote query 3 times
-	if ret = RunMMDBCheck(ip); ret == nil {
-		for i := 0; i < structs.WithIn(retry, 1, 3) && (ret == nil || ret.IP != ""); i++ {
-			ret = ExecGeoCheck(p, script, ip, network)
-		}
+	// try remote query 5 times, if cannot get record, use mmdb
+	for i := 0; i < structs.WithIn(retry, 1, 5) && (ret == nil || ret.IP == ""); i++ {
+		ret = ExecGeoCheck(p, script, ip, network)
 	}
 
-	if ret == nil {
-		ret = &interfaces.GeoInfo{}
+	// if remote query fails, try using mmdb
+	if ret.IP == "" {
+		ret = RunMMDBCheck(ip)
+		if ret == nil {
+			ret = &interfaces.GeoInfo{}
+		}
 	}
 
 	proxyName := "NoProxy"
