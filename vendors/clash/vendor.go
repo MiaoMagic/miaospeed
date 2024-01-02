@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/Dreamacro/clash/constant"
+	"github.com/moshaoli688/clash/constant"
 	"github.com/moshaoli688/miaospeed/interfaces"
 )
 

@@ -3,10 +3,11 @@
 package clash
 
 import (
-	"github.com/Dreamacro/clash/constant"
 	"net/netip"
 	"net/url"
 	"strconv"
+
+	"github.com/moshaoli688/clash/constant"
 )
 
 func urlToMetadata(rawURL string, network constant.NetWork) (addr constant.Metadata, err error) {
