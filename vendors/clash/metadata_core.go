@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/moshaoli688/clash/constant"
+	"github.com/Dreamacro/clash/constant"
 )
 
 func urlToMetadata(rawURL string, network constant.NetWork) (addr constant.Metadata, err error) {
