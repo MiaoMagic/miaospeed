@@ -3,6 +3,7 @@
 package clash
 
 import (
+	"fmt"
 	"github.com/Dreamacro/clash/constant"
 	"net/netip"
 	"net/url"
@@ -14,19 +15,19 @@ func urlToMetadata(rawURL string, network constant.NetWork) (addr constant.Metad
 	if err != nil {
 		return
 	}
-
-	portStr := u.Port()
-	if portStr == "" {
+	port := u.Port()
+	if port == "" {
 		switch u.Scheme {
 		case "https":
-			portStr = "443"
+			port = "443"
 		case "http":
-			portStr = "80"
+			port = "80"
 		default:
+			err = fmt.Errorf("%s scheme not Support", rawURL)
 			return
 		}
 	}
-	portInt, err := strconv.Atoi(portStr)
+	uintPort, err := strconv.ParseUint(port, 10, 16)
 	if err != nil {
 		return
 	}
@@ -34,7 +35,7 @@ func urlToMetadata(rawURL string, network constant.NetWork) (addr constant.Metad
 		NetWork: network,
 		Host:    u.Hostname(),
 		DstIP:   netip.Addr{},
-		DstPort: uint16(portInt),
+		DstPort: uint16(uintPort),
 	}
 	return
 }

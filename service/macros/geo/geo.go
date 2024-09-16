@@ -80,12 +80,17 @@ func DetectingSource(p interfaces.Vendor, script string, retry int, queryServers
 			IPv6Stack: make([]*interfaces.GeoInfo, 0),
 			MainStack: &interfaces.GeoInfo{},
 		}
-
+		vp := func() interfaces.Vendor {
+			if out != nil && out.Count() > 0 {
+				return p
+			}
+			return nil
+		}()
 		for _, ip := range ipv4 {
-			in.IPv4Stack = append(in.IPv4Stack, RunGeoCheck(nil, script, ip, retry, "tcp"))
+			in.IPv4Stack = append(in.IPv4Stack, RunGeoCheck(vp, script, ip, retry, "tcp"))
 		}
 		for _, ip := range ipv6 {
-			in.IPv6Stack = append(in.IPv6Stack, RunGeoCheck(nil, script, ip, retry, "tcp"))
+			in.IPv6Stack = append(in.IPv6Stack, RunGeoCheck(vp, script, ip, retry, "tcp"))
 		}
 
 		if in.Count() > 0 {

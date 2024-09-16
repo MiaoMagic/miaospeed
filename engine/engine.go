@@ -22,6 +22,7 @@ func VMNew() *goja.Runtime {
 
 	rt.Set("print", factory.PrintFactory(rt, "Script Print |", utils.LTInfo))
 	rt.Set("debug", factory.PrintFactory(rt, "Script Debug |", utils.LTLog))
+	rt.Set("miaospeedversion", utils.VERSION)
 
 	rt.SetMaxCallStackSize(1024)
 	return rt

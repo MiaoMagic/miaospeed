@@ -6,6 +6,7 @@ import (
 	"github.com/moshaoli688/miaospeed/interfaces"
 	"github.com/moshaoli688/miaospeed/utils"
 	"gopkg.in/yaml.v2"
+	"strings"
 )
 
 func parseProxy(proxyName, proxyPayload string) constant.Proxy {
@@ -21,6 +22,9 @@ func parseProxy(proxyName, proxyPayload string) constant.Proxy {
 }
 
 func extractFirstProxy(proxyName, proxyPayload string) constant.Proxy {
+	if processProxyPayload(proxyPayload) {
+		return nil
+	}
 	proxy := parseProxy(proxyName, proxyPayload)
 
 	if proxy != nil && interfaces.Parse(proxy.Type().String()) != interfaces.ProxyInvalid {
@@ -28,4 +32,21 @@ func extractFirstProxy(proxyName, proxyPayload string) constant.Proxy {
 	}
 
 	return nil
+}
+func processProxyPayload(proxyPayload string) bool {
+	if !strings.Contains(proxyPayload, "type: vless") {
+		return false
+	}
+	var data map[string]interface{}
+	_ = yaml.Unmarshal([]byte(proxyPayload), &data)
+	if flow, ok := data["flow"].(string); ok {
+		legacyFlows := []string{"xtls-rprx-direct", "xtls-rprx-origin", "xtls-rprx-splice"}
+		for _, legacyFlow := range legacyFlows {
+			if flow == legacyFlow {
+				utils.DInfof("Detected legacy flow: %s. This protocol is deprecated.", flow)
+				return true
+			}
+		}
+	}
+	return false
 }

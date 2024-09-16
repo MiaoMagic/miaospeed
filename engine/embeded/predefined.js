@@ -1,6 +1,6 @@
 function get(data, path, defaults=null) {
-    var paths = path.split('.');
-    for (var i = 0; i < paths.length; i++) {
+	const paths = path.split('.');
+	for (let i = 0; i < paths.length; i++) {
         if (data === null || data === undefined) return defaults;
         data = data[paths[i]];
     }
