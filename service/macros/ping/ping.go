@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"net/http/httptrace"
@@ -92,39 +93,43 @@ func pingViaNetCat(ctx context.Context, p interfaces.Vendor, url string) (uint16
 
 	data = structs.X(preconfigs.NETCAT_HTTP_PAYLOAD, data, purl.Hostname(), utils.VERSION)
 
-	connStart := time.Now().UnixMilli()
+	connStart := time.Now()
 	conn, err := p.DialTCP(ctx, url, interfaces.ROptionsTCP)
 	if err != nil || conn == nil {
 		return 0, 0, fmt.Errorf("cannot dial remote address")
 	}
 	defer conn.Close()
 
-	conn.SetDeadline(time.Now().Add(time.Second * 6))
-	c := bufio.NewReader(conn)
-
+	_ = conn.SetDeadline(time.Now().Add(time.Second * 6))
+	reader := bufio.NewReader(conn)
+	tcpStart := time.Now()
 	// prewrite to ensure tcp conn is established
 	// httpStartReq1 := time.Now().UnixMilli()
 	if _, err := conn.Write([]byte(data)); err != nil {
-		return 0, 0, fmt.Errorf("cannot write payload to remote")
+		return 0, 0, fmt.Errorf("1. cannot write payload to remote %w", err)
 	}
-
-	c.ReadLine()
-	for c.Buffered() > 0 {
-		c.ReadLine()
+	_, _ = reader.Peek(1) // flush buffer
+	tcpRTT := time.Since(tcpStart).Milliseconds()
+	connRTT := time.Since(connStart).Milliseconds()
+	for reader.Buffered() > 0 {
+		_, _, _ = reader.ReadLine()
 	}
-
-	httpStartReq2 := time.Now().UnixMilli()
+	tcpStart = time.Now()
+	// resend the request to get the RTT of the second request
 	if _, err := conn.Write([]byte(data)); err != nil {
-		return 0, 0, fmt.Errorf("cannot write payload to remote")
+		return uint16(tcpRTT), uint16(connRTT), fmt.Errorf("2. cannot write payload to remote: %w", err)
 	}
-
-	c.ReadLine()
-	for c.Buffered() > 0 {
-		c.ReadLine()
+	if _, err := reader.Peek(1); err != nil {
+		if err == io.EOF {
+			return uint16(tcpRTT), uint16(connRTT), nil
+		}
+		return uint16(tcpRTT), uint16(connRTT), fmt.Errorf("cannot read the second response: %w", err)
 	}
-	httpEnd := time.Now().UnixMilli()
-
-	return uint16(httpEnd - httpStartReq2), uint16(httpStartReq2 - connStart), nil
+	tcpRTT = time.Since(tcpStart).Milliseconds()
+	for reader.Buffered() > 0 {
+		_, _, _ = reader.ReadLine()
+	}
+	return uint16(tcpRTT), uint16(connRTT), nil
 }
 
 func ping(p interfaces.Vendor, url string, withAvg uint16, maxAttempt int, timeout uint) (uint16, uint16) {
