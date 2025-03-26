@@ -3,6 +3,7 @@ package clash
 import (
 	"context"
 	"fmt"
+	"github.com/Dreamacro/clash/component/resolver"
 	"net"
 
 	"github.com/Dreamacro/clash/constant"
@@ -68,5 +69,10 @@ func (c *Clash) ProxyInfo() interfaces.ProxyInfo {
 		Name:    c.proxy.Name(),
 		Address: c.proxy.Addr(),
 		Type:    interfaces.Parse(c.proxy.Type().String()),
+	}
+}
+func init() {
+	if resolver.DisableIPv6 {
+		resolver.DisableIPv6 = false
 	}
 }
