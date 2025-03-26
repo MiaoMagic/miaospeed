@@ -35,5 +35,5 @@ archives:
     - README.md
 release:
   github:
-    owner: moshaoli688
+    owner: MiaoMagic
     name: miaospeed
