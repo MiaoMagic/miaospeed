@@ -108,4 +108,4 @@ jobs:
       - name: GoReleaser Build Test Version
         uses: goreleaser/goreleaser-action@v5
         with:
-          args: release --snapshot --clean --skip-publish
+          args: release --snapshot --clean --skip-publish --parallelism=1
