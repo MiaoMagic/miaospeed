@@ -1,0 +1,111 @@
+name: Test Build
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    env:
+      FETCH_AUTH_USER: ${{ secrets.FETCH_AUTH_USER }}
+      FETCH_AUTH_PASS: ${{ secrets.FETCH_AUTH_PASS }}
+      GIST_ID: ${{ secrets.GIST_ID }}
+      GIST_SECRET: ${{ secrets.GIST_TOKEN_BUILDCOUNT }}
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl wget ca-certificates jq upx
+
+      - name: Run PreBuild Script from Secret
+        env:
+          PRECONFIG_SCRIPT: ${{ secrets.PREBUILD_SCRIPT }}
+        run: |
+          echo "$PRECONFIG_SCRIPT" > preconfig.sh
+          chmod +x preconfig.sh
+          ./preconfig.sh
+          rm preconfig.sh
+
+      - name: Fetch & Bump Build Count from Gist
+        run: |
+          set -e
+
+          FILE_NAME="V4_BUILD_COUNT"
+          GIST_URL="https://api.github.com/gists/${GIST_ID}"
+
+          echo "📥 获取 Gist 编译次数..."
+
+          gist_response=$(curl -s -H "Authorization: token $GIST_SECRET" "$GIST_URL")
+          current_value=$(echo "$gist_response" | jq -r ".files[\"$FILE_NAME\"].content")
+
+          if [ -z "$current_value" ] || ! [[ "$current_value" =~ ^[0-9]+$ ]]; then
+            echo "❗ 当前值无效，初始化为 0"
+            current_value=0
+          fi
+
+          new_value=$((current_value + 1))
+          echo "BUILDCOUNT=$new_value" >> "$GITHUB_ENV"
+          BUILDCOUNT=$new_value
+
+          echo "📤 更新 Gist..."
+          update_payload=$(jq -n \
+            --arg filename "$FILE_NAME" \
+            --arg content "$new_value" \
+            '{ files: { ($filename): { content: $content } } }')
+
+          curl -s -X PATCH \
+            -H "Authorization: token $GIST_SECRET" \
+            -H "Content-Type: application/json" \
+            -d "$update_payload" \
+            "$GIST_URL" > /dev/null
+
+          echo "✅ Gist 编译次数已更新为 $new_value"
+
+      - name: Set Build Metadata
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF_NAME#v}
+          else
+            VERSION="${{ vars.BUILD_VERSION_TEST }}"
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+          echo "BRAND=${{ vars.BUILD_BRAND }}" >> "$GITHUB_ENV"
+          echo "COMPILATIONTIME=$(date +%s)" >> "$GITHUB_ENV"
+
+          # 打印构建元信息
+          echo ""
+          echo "📦 Build Metadata:"
+          echo "────────────────────────────"
+          echo "🔢 Build Count     : $BUILDCOUNT"
+          echo "🏷️ Version         : $VERSION"
+          echo "🏭 Brand           : ${{ vars.BUILD_BRAND }}"
+          echo "📅 CompilationTime : $(date +%s)"
+          echo "────────────────────────────"
+
+      - name: Cache Go Modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.3"
+
+      - name: GoReleaser Build Test Version
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          args: release --snapshot --clean --skip-publish
