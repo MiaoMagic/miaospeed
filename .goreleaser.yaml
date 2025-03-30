@@ -28,8 +28,8 @@ builds:
       - linux
       - windows
     hooks:
-      pre: ./build.release.hook.pre.sh
-      post: ./build.release.hook.post.sh
+      pre: sh ./build.release.hook.pre.sh
+      post: sh ./build.release.hook.post.sh
 archives:
   - files:
     - README.md
